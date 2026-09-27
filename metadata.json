@@ -1,0 +1,6 @@
+{
+  "name": "MOIL AI Mining - Manganese Reserve & Production Intelligence",
+  "description": "Enterprise dashboard for MOIL manganese reserve potential estimation, satellite-derived environmental tracking, and production shortfall prediction.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

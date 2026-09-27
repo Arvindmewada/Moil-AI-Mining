@@ -1,0 +1,38 @@
+version: '3.8'
+
+services:
+  # MOIL AI Mining - React Frontend Dashboard
+  moil-frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: moil_ui_service
+    ports:
+      - "3000:8080"
+    environment:
+      - VITE_FASTAPI_URL=http://localhost:8000
+    restart: unless-stopped
+    depends_on:
+      - moil-fastapi-backend
+    networks:
+      - moil-internal-net
+
+  # MOIL AI Mining - FastAPI Machine Learning Inference Server
+  moil-fastapi-backend:
+    image: python:3.11-slim
+    container_name: moil_fastapi_service
+    working_dir: /app
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./fastapi_server.py:/app/fastapi_server.py
+    command: >
+      bash -c "pip install fastapi uvicorn pydantic &&
+               uvicorn fastapi_server:app --host 0.0.0.0 --port 8000"
+    restart: unless-stopped
+    networks:
+      - moil-internal-net
+
+networks:
+  moil-internal-net:
+    driver: bridge
